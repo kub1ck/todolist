@@ -26,7 +26,7 @@ services:
       timeout: 5s
       retries: 5
 
-  api:
+  api: &api
     build:
       context: .
     depends_on:
@@ -40,13 +40,7 @@ services:
       - '8000:8000'
 
   migrations:
-    build:
-      context: .
-    depends_on:
-      postgres:
-        condition: service_healthy
-    volumes:
-      - ./migrations_data:/migrations
+    <<: *api
     command: python manage.py migrate
 
   front:
