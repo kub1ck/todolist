@@ -1,0 +1,59 @@
+version: "3.9"
+
+volumes:
+  postgres_data:
+  app_data:
+  migrations_data:
+
+services:
+
+  postgres:
+    image: postgres:14.6-alpine
+    restart: always
+    env_file:
+      - ./.env
+    environment:
+      POSTGRES_DB: ${POSTGRES_NAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5433:5432'
+    healthcheck:
+      test: pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_NAME}
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrations:
+        condition: service_completed_successfully
+    volumes:
+      - ./app_data:/app
+    ports:
+      - '8000:8000'
+
+
+  migrations:
+    build:
+      context: .
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./migrations_data:/migrations
+    command: python manage.py migrate
+
+  front:
+    image: sermalenk/skypro-front:lesson-34
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - api
