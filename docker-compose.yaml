@@ -8,7 +8,7 @@ volumes:
 services:
 
   postgres:
-    image: postgres:latest
+    image: postgres:12.4-alpine
     restart: always
     env_file:
       - ./.env
