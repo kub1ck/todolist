@@ -3,10 +3,8 @@ version: "3.9"
 services:
 
   postgres:
-    image: postgres:14.6-alpine
+    image: postgres:latest
     restart: always
-    env_file:
-      - ./.env
     environment:
       POSTGRES_DB: ${POSTGRES_NAME}
       POSTGRES_USER: ${POSTGRES_USER}
