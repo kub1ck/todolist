@@ -41,6 +41,9 @@ services:
 
   migrations:
     <<: *api
+    depends_on:
+      postgres:
+        condition: service_healthy
     command: python manage.py migrate
 
   front:
