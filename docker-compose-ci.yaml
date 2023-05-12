@@ -21,7 +21,7 @@ services:
       timeout: 5s
       retries: 5
 
-  api: &api
+  api:
     image: daniil77089/todolist:latest
     depends_on:
       postgres:
@@ -30,11 +30,9 @@ services:
         condition: service_completed_successfully
     volumes:
       - ./app_data:/app
-    ports:
-      - '8000:8000'
 
   migrations:
-    <<: *api
+    image: daniil77089/todolist:latest
     depends_on:
       postgres:
         condition: service_healthy
