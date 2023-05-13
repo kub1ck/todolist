@@ -19,6 +19,8 @@ services:
 
   api:
     image: daniil77089/todolist:latest
+    environment:
+      POSTGRES_HOST: postgres
     depends_on:
       postgres:
         condition: service_healthy
