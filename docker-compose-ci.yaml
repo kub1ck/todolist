@@ -34,7 +34,7 @@ services:
         condition: service_healthy
       migrations:
         condition: service_completed_successfully
-    command: python manage.py runserver
+    command: python manage.py runserver 0.0.0.0:8000
 
   migrations:
     image: daniil77089/todolist:latest
