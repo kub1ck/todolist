@@ -45,8 +45,8 @@ jobs:
       - name: Render configs
         run: |
           mkdir deploy
-          cat docker_ci_env | envsubst > deploy/.env
           cat docker-compose-ci.yaml | envsubst > deploy/docker-compose.yaml
+          cat docker_ci_env | envsubst > deploy/.env
 
       - name: Clone files to server
         uses: appleboy/scp-action@master
