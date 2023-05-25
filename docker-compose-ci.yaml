@@ -6,7 +6,7 @@ services:
     image: postgres:14.7-alpine
     restart: always
     environment:
-      POSTGRES_DB: $POSTGRES_NAME
+      POSTGRES_DB: postgres
       POSTGRES_USER: $POSTGRES_USER
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
     ports:
@@ -22,12 +22,14 @@ services:
     links:
       - "postgres:database"
     environment:
+      DEBUG: True
+      SECRET_KEY: django-insecure-x!90j^^@^i=q0=adgr(0&#%=(_544(##ft7nwk3u+pc!@#kzw(
       POSTGRES_HOST: database
-      POSTGRES_DB: $POSTGRES_NAME
+      POSTGRES_DB: postgres
       POSTGRES_USER: $POSTGRES_USER
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
     ports:
-      - 80:80
+      - "8000:8000"
     depends_on:
       postgres:
         condition: service_healthy
@@ -41,7 +43,7 @@ services:
       - "postgres:database"
     environment:
       POSTGRES_HOST: database
-      POSTGRES_DB: $POSTGRES_NAME
+      POSTGRES_DB: postgres
       POSTGRES_USER: $POSTGRES_USER
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
     depends_on:
