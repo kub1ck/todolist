@@ -11,8 +11,6 @@ services:
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
     ports:
       - 5432:5432
-    volumes:
-      - ./postgres_data:/var/lib/postgresql/data
     healthcheck:
       test: pg_isready -U $POSTGRES_USER -d $POSTGRES_NAME
       interval: 5s
@@ -23,22 +21,18 @@ services:
     image: daniil77089/todolist:latest
     links:
       - "postgres:database"
+    environment:
+      POSTGRES_DB: $POSTGRES_NAME
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
     ports:
       - 80:80
     depends_on:
       postgres:
         condition: service_healthy
-      migrations:
-        condition: service_completed_successfully
     volumes:
       - ./app_data:/app
-
-  migrations:
-    image: daniil77089/todolist:latest
-    depends_on:
-      postgres:
-        condition: service_healthy
-    command: python manage.py migrate
+    command: python manage.py migrate && python manage.py runserver
 
   front:
     image: sermalenk/skypro-front:lesson-34
