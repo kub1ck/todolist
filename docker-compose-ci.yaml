@@ -30,8 +30,6 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    volumes:
-      - ./app_data:/app
     command: python manage.py migrate && python manage.py runserver
 
   front:
