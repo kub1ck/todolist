@@ -19,6 +19,8 @@ services:
 
   api:
     image: daniil77089/todolist:latest
+    links:
+      - "postgres:database"
     ports:
       - 80:80
     depends_on:
