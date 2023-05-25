@@ -31,7 +31,23 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-    command: python manage.py migrate && python manage.py runserver
+      migrations:
+        condition: service_completed_successfully
+    command: python manage.py runserver
+
+  migrations:
+    image: daniil77089/todolist:latest
+    links:
+      - "postgres:database"
+    environment:
+      POSTGRES_HOST: database
+      POSTGRES_DB: $POSTGRES_NAME
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: python manage.py migrate
 
   front:
     image: sermalenk/skypro-front:lesson-34
