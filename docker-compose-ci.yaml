@@ -19,6 +19,13 @@ services:
 
   api:
     image: daniil77089/todolist:latest
+    links:
+      - postgres:database
+    environment:
+      POSTGRES_HOST: database
+      POSTGRES_DB: $POSTGRES_NAME
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
     ports:
       - "80:8000"
     depends_on:
@@ -30,6 +37,13 @@ services:
 
   migrations:
     image: daniil77089/todolist:latest
+    links:
+      - postgres:database
+    environment:
+      POSTGRES_HOST: database
+      POSTGRES_DB: $POSTGRES_NAME
+      POSTGRES_USER: $POSTGRES_USER
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
     depends_on:
       postgres:
         condition: service_healthy
