@@ -12,7 +12,7 @@ services:
     volumes:
       - ./postgres-data:/var/lib/postgresql/data
     healthcheck:
-      test: pg_isready -U $POSTGRES_USER -d $POSTGRES_NAME
+      test: pg_isready -U $POSTGRES_USER
       interval: 5s
       timeout: 5s
       retries: 5
