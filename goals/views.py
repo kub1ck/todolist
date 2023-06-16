@@ -38,7 +38,7 @@ class GoalCategoryView(RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return GoalCategory.objects.filter(user=self.request.user, is_deleted=False)
+        return GoalCategory.objects.filter(user=self.request.user)
 
     def perform_destroy(self, instance):
         instance.is_deleted = True
@@ -70,7 +70,7 @@ class GoalListView(ListAPIView):
     ordering = ["title"]
 
     def get_queryset(self):
-        return Goal.objects.filter(user=self.request.user, is_deleted=False)
+        return Goal.objects.filter(user=self.request.user)
 
 
 class GoalView(RetrieveUpdateDestroyAPIView):
@@ -79,7 +79,7 @@ class GoalView(RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Goal.objects.filter(user=self.request.user, is_deleted=False)
+        return Goal.objects.filter(user=self.request.user)
 
     def perform_destroy(self, instance):
         instance.status = Goal.Status.archived
@@ -104,7 +104,7 @@ class CommentListView(ListAPIView):
     ordering = ['-created']
 
     def get_queryset(self):
-        return Goal.objects.filter(user=self.request.user, is_deleted=False)
+        return Goal.objects.filter(user=self.request.user)
 
 
 class CommentView(RetrieveUpdateDestroyAPIView):
@@ -113,4 +113,4 @@ class CommentView(RetrieveUpdateDestroyAPIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
-        return Goal.objects.filter(user=self.request.user, is_deleted=False)
+        return Goal.objects.filter(user=self.request.user)
