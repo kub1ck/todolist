@@ -47,7 +47,7 @@ services:
     command: python manage.py migrate
 
   front:
-    image: sermalenk/skypro-front:lesson-34
+    image: sermalenk/skypro-front:lesson-38
     restart: always
     ports:
       - "80:80"
