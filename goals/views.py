@@ -66,7 +66,7 @@ class GoalCategoryListView(ListAPIView):
     ordering = ["title"]
 
     def get_queryset(self):
-        return GoalCategory.objects.filter(participants__user=self.request.user, is_deleted=False)
+        return GoalCategory.objects.filter(board__participants__user=self.request.user, is_deleted=False)
 
 
 class GoalCategoryView(RetrieveUpdateDestroyAPIView):
@@ -138,7 +138,7 @@ class CommentListView(ListAPIView):
     ordering = ['-created']
 
     def get_queryset(self):
-        return GoalComment.objects.filter(participants__user=self.request.user, is_deleted=False)
+        return GoalComment.objects.filter(goal__category__board__participants__user=self.request.user)
 
 
 class CommentView(RetrieveUpdateDestroyAPIView):
