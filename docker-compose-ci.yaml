@@ -41,8 +41,15 @@ services:
         condition: service_healthy
     command: python manage.py migrate
 
+  bot:
+    image: daniil77089/todolist:latest
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: python manage.py runbot
+
   front:
-    image: sermalenk/skypro-front:lesson-37
+    image: sermalenk/skypro-front:lesson-38
     restart: always
     ports:
       - "8080:80"
